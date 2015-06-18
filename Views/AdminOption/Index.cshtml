@@ -1,0 +1,39 @@
+﻿@model boot_2_new.Models.Admin
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+
+
+<h1>Change Your Password</h1>
+@using (Html.BeginForm("ChangePassword", "AdminOption", FormMethod.Post, new { @class = "form-group" }))
+{
+    @Html.ValidationSummary(true);
+       
+    <fieldset>
+       
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            <div class="editor-label">
+                @Html.LabelFor(x => x.password)
+                </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.password, new { @class = "form-control", @placholder = "Enter Your Password" })
+                @Html.ValidationMessageFor(x => x.password)
+                </div>
+           
+        <div class="form-group">
+            <div class="editor-field">
+                @Html.LabelFor(x => x.conformPassword)
+                </div>
+            <div class="editor-field">
+                @Html.EditorFor(x => x.conformPassword, new { @class = "form-control", @placeholder = "Enter Your Password" })
+                @Html.ValidationMessageFor(x => x.conformPassword)
+                </div>
+
+            </div>
+        <input type="submit" />
+            </div>
+    </fieldset>
+
+}

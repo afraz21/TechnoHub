@@ -1,0 +1,174 @@
+﻿@using boot_2_new.Models;
+@using System.IO
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<div id="home">
+
+    <div class="row">
+        <div class="col-md-2">
+
+
+        </div>
+
+        <div class=" col-md-8 ">
+
+            <!--first-->
+            <div class="page-header" style="font-size:xx-large">
+                <p class="label  label-danger">Latest News</p>
+            </div>
+            <ul class="header" id="first">
+                @foreach (News n in Model)
+                {
+
+
+                    FileStream f = new FileStream(Server.MapPath(@"~\Content\NewsFiles\" + n.Id + ".txt"), FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+                    StreamReader rd = new StreamReader(f);
+                    n.news1 = rd.ReadToEnd();
+                    rd.Close();
+                    f.Close();
+                <!-- single news block-->
+                    <li>
+                        <div class="news">
+                            <div class="news_image">
+                                <p>
+                                    @if (n.fcount > 0)
+                                    {
+                                        <a class="fancybox" href="~/Content/imgaes-news/@n.Id-0.jpg" data-fancybox-group="gallery" title="@n.title">
+                                            <img id="img2" style="width:30%;height:auto;min-height:270px;float:left" class="img-rounded news_image" src="~/Content/imgaes-news/@n.Id-0.jpg" />
+                                        </a>
+                                    }
+                                </p>
+                            </div>
+
+
+
+                            <div class="news_heading center-block ">
+                                <label id="lable"> @n.title</label>
+                            </div>
+
+
+                            <div class="news_content">
+                                <p id="news-content" style="margin-left:10%;"> @n.news1</p>
+
+                            </div>
+                            <div class="news-footer" id="footer">
+                                <form method="post" action="/Seemore/Blog">
+
+                                    <span style="font-size:large; margin-right:10px" data-toggle="tooltip" data-placement="left" title="Date And Time Of Post" id="icons" class=" glyphicon  glyphicon-pencil ">
+                                        <label style="font-size:x-small">
+                                            @n.date
+                                        </label>
+                                    </span>
+
+                                    <span style="font-size:large; margin-right:10px" id="icons" data-toggle="tooltip" data-placement="left" title="Likes" class="  glyphicon  glyphicon-thumbs-up "><label style="font-size:x-small">@n.Likes</label></span>
+                                    <span style="font-size:large;margin-right:10px " id="icons" data-toggle="tooltip" data-placement="left" title="Comments" class=" glyphicon  glyphicon-comment "><label style="font-size:x-small">@n.Comments.Count()</label></span>
+
+
+                                    @Html.Hidden("newsId", @n.Id);
+                                    <button class="btn btn-info pull-right" id="btnsub" data-toggle="tooltip" data-placement="left" title="Read More" style="margin-right:10px;font-size:small">Read More</button>
+
+
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </li>
+
+
+
+
+                }
+            </ul>
+        </div>
+
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="label  label-danger">Web Search</p>
+                </div>
+                <div class="col-md-6  ">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="home2" class="hidden container">
+    <div class="row">
+        <div class="col-md-2">
+           
+        </div>
+        <div class="col-md-8">
+           <ul class="header" id="wow">
+
+           </ul>
+
+        </div>
+        <div class="col-md-2">
+
+        </div>
+       </div>
+    
+</div>
+<div id="template" class="hidden">
+
+              
+                <div class="news">
+                    <div class="news_image">
+                        <p>
+                            <img id="img" style="width:30%;height:auto;min-height:270px;float:left" class="img-rounded news_image"  />
+                        </p>
+                    </div>
+
+                    <div class="news_heading center-block ">
+                        <label id="title-news-" style="font-size:small"></label>
+                    </div>
+                    <div class="news_content">
+                        <p id="news-content-" style="margin-left:10%;"></p>
+
+                    </div>
+                    <div class="news-footer" id="footer">
+                     <form method="post" action="/Seemore/Blog">
+
+                            <span style="font-size:large; margin-right:10px" data-toggle="tooltip" data-placement="left" title="Date And Time Of Post" id="icons" class=" glyphicon  glyphicon-pencil ">
+                                <label style="font-size:x-small" id="date1">
+                                 
+                                </label>
+                            </span>
+
+                            <span style="font-size:large; margin-right:10px"  data-toggle="tooltip" data-placement="left" title="Likes" class="  glyphicon  glyphicon-thumbs-up "><label style="font-size:x-small" id="likes"></label></span>
+                            <span style="font-size:large;margin-right:10px " data-toggle="tooltip" data-placement="left" title="Comments" class=" glyphicon  glyphicon-comment "><label style="font-size:x-small" id="comments"></label></span>
+
+
+                            <input type="hidden" id="nid" name="nid" />
+                        @* <button class="btn btn-info pull-right" id="readmore" data-toggle="tooltip" data-placement="left" title="Read More" style="margin-right:10px;font-size:small">Read More</button>*@
+
+
+
+                        </form>
+                    </div>
+
+                </div>
+             
+
+    </div>
+    <div id="template2" class="hidden">
+        <form method="post" action="/Seemore/Blog">
+            <div id="post-sub">
+
+            </div>
+            </form>
+      </div>
+

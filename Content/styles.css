@@ -1,0 +1,190 @@
+﻿.header {
+    overflow: hidden;
+    list-style-position: hanging;
+    list-style-type:none;
+}
+.news-body{
+   
+
+}
+.page-heading{
+   font-size:30px;
+    font-family:Arial;
+}
+.news {
+    border: outset;
+    height: 300px;
+    max-height: 350px;
+    
+    background-color: darkgray;
+    margin: 1% 0 1% 0;
+  position:static;
+}
+
+.news_heading {
+    margin :2% 2% 2% 2%;
+    text-align:center;
+    text-decoration-style:solid;
+   text-underline-position:alphabetic;
+   font-size:inherit;
+    font-size:xx-small;
+    position:static;
+   font-family:Algerian;
+   width:50%;
+   margin-left:40%;
+   
+   
+}
+
+.news_content {
+    overflow: hidden;
+    text-overflow: ellipsis clip;
+    border-top:solid;
+    
+    max-height:50%;
+    border-top:medium;
+    margin-left:10%;
+    padding-right:10%;
+    
+}
+
+.news-footer {
+
+    vertical-align:bottom;
+    float:right;
+    glyph-orientation-horizontal:inherit;
+    
+}
+
+.news_image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    position: static;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left:1%;
+    border: double;
+}
+
+
+.header2 {
+}
+
+
+.images_navigation {
+    opacity: 0.7;
+    fill-opacity: 0.7;
+    margin-top: 150%;
+}
+
+    .images_navigation:hover {
+        opacity: 1;
+        fill-opacity: 1;
+    }
+
+.news_body2 {
+    display: inline-block;
+    border: outset;
+    width: 550px;
+    height: 200px;
+    max-height: 500px;
+    background-repeat: no-repeat;
+    background-color: darkgray;
+    text-align: left;
+}
+
+
+
+
+
+
+.news_shadow {
+}
+
+
+
+
+
+.news_content2 {
+    display: block;
+    width: 240px;
+    height: 200px;
+    text-wrap: none;
+    margin-left: 3%;
+    margin-right: 3%;
+    overflow: hidden;
+    text-overflow: ellipsis clip;
+}
+
+.footer {
+    background-color: black;
+    text-align: center;
+    display: block;
+    color: gray;
+}
+
+.seemoreimg {
+    display: block;
+    width: 200px;
+    display: block;
+    margin: 10px 10px 10px 10px;
+}
+
+.navigation_images {
+    vertical-align: bottom;
+    border: outset;
+}
+
+    .navigation_images:hover {
+        vertical-align: central;
+        opacity: 2;
+        border: outset;
+    }
+
+.side-nav {
+    position: fixed;
+    list-style: circle;
+    display: grid;
+}
+
+
+
+.box-info label{
+   
+    font-size:x-large;
+    font-family:'Bell MT';
+
+}
+
+.box-info p{
+   
+    font-size:x-large;
+    color:black;
+    word-spacing:2%;
+    font-family:'Angsana New';
+
+}
+
+.comments {
+    margin-top:5%;
+    margin-left:20%;
+    display:block;
+    background-color:whitesmoke;
+    border:ridge;
+    line-height:initial;
+
+}
+.comments label{
+    font-size:large;
+    font-family:Vivaldi;
+   
+}
+
+.Videos{
+    width:100%;
+    height:50%;
+    background-color:transparent;
+    display:block;
+
+}

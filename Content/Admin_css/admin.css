@@ -1,0 +1,35 @@
+﻿
+.banner{
+    height:10%;
+    background-color:gray;
+    display:block;
+    text-emphasis:circle;
+    font-size:30px;
+    font-weight:bold;
+    text-align:center;
+    text-align-last:end;
+}
+
+.sidebar{
+    background-color:lightgray;
+     border:solid;
+   
+}
+.sidebar ul{
+    list-style-type:none;
+    display:block;
+    
+
+}
+.sidebarpost{
+
+   line-height:normal;
+   margin-bottom:20%;
+  
+   
+}
+.articles{
+    border:thin;
+    background-color:#F8F8F8;
+    
+}

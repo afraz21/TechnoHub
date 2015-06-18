@@ -1,0 +1,99 @@
+﻿@model boot_2_new.Models.Video
+@using boot_2_new.Models
+@{
+    ViewBag.Title = "Post Videos";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("getVideos", "PostVideos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <article class="post width_full" style="height:60%">
+        <header><h3><b>Post New Article</b></h3></header>
+        <div class="module_content">
+            <fieldset>
+                @Html.LabelFor(x => x.title)
+
+                @Html.EditorFor(x => x.title, new { @class = "Boxed" })
+                @Html.ValidationMessageFor(x => x.title)
+            </fieldset>
+            <footer style="margin-bottom:20%;margin-top:2%">
+
+
+                Upload Video:<input type="file" value="Upload title Image" name="title" />
+                <input type="submit" class="btn btn-danger pull-right" style="height:10%" value="Submit Article" />
+
+            </footer>
+        </div>
+        <div class="clear"></div>
+
+    </article>
+
+    Html.EndForm();
+}
+
+@if (ViewBag.isvalid == "1")
+{
+    <article class="module width_full">
+        <header>
+            <h3 class="tabs_involved">Content Manager</h3>
+
+        </header>
+        <div class="tab_container">
+            <div id="tab1" class="tab_content">
+                <table class="tablesorter table table-responsive table-hover highlight-blue" cellspacing="2">
+                    <thead>
+                        <tr>
+
+                            <th>Title </th>
+                            <th>Picture</th>
+                            <th>Edit </th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       @if(ViewBag.Slider!=null)
+                       { 
+                        foreach (Video n in ViewBag.Slider)
+                        {
+                            <tr>
+
+                                @using (Html.BeginForm("EditVideos", "PostVideos", FormMethod.Post))
+                                {
+                                    <td style="width:40%"><textarea rows="7" style="width:30%" name="title">@n.title</textarea></td>
+                                    <td> <video width="30" height="30" controls> <source src="~/Content/Videos/@n.file" type="video/@n.file.Split('.')[1]"><source src="~/Content/Videos/@n.file" type="video/ogg"> </video></td>
+
+                                    <td>
+
+                                        @Html.Hidden("index", @n.Id);
+                                        <input type="image" src="~/Content/images-admin/icn_edit.png" title="Edit" data-toggle="modal" data-target=".bs-example-modal-lg">
+
+
+
+                                    </td>
+                                    Html.EndForm();
+                                }
+                                <td>
+
+                                    @using (Html.BeginForm("DeleteVideos", "PostVideos", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("index", @n.Id);
+
+
+                                        <input type="image" src="~/Content/images-admin/icn_trash.png" title="Trash">
+                                                                    Html.EndForm();
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+                        }
+                    </tbody>
+                </table>
+            </div><!-- end of #tab1 -->
+        </div>
+
+    </article>
+}
+

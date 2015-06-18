@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "ManageSlider";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+
+<h2>ManageSlider</h2>
+<form action="/AdminPanel/getNews" method="post" enctype="multipart/form-data">
+
+    Upload Image: <input type="file" name="image" />
+
+
+
+    <input type="submit" value="upload" />
+</form>

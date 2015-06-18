@@ -1,0 +1,83 @@
+﻿
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    
+
+    <meta charset="utf-8" />
+    <title>Dashboard  Admin Panel</title>
+
+   
+   
+
+  
+    <link href="~/Content/layout.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+
+
+
+<body>
+   
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/styles.css")
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin_css/admin.css" />
+  
+    <nav class="navbar navbar-inverse navbar-static-top ">
+        <div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarcollapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+
+            </div>
+            <div class="collapse navbar-collapse " id="navbarcollapse">
+
+
+                <ul class="nav navbar-nav pull-left" id="nav1">
+
+                    <li id="home1"><a href="/AdminPanel"><span class="glyphicon glyphicon-home"> HOME</span></a></li>
+                    <li id="mobile"><a href="/ManageSlider" class="alert-link"><span class="glyphicon glyphicon-phone">Manage Slider</span></a></li>
+                    <li id="software"><a href="/PostVideos" class="alert-link"><span class="glyphicon glyphicon-cloud"> Post Videos</span></a></li>
+                    <li id="trending"><a href="/AdminOption" class="alert-link"><span class="glyphicon glyphicon-flag"> Admin Options</span></a></li>
+                    
+                </ul>
+
+               
+                    <form action="/Home" target="_blank">
+
+                        <input type="submit" class="btn btn-danger pull-right"  value="View Live " style="background-color:transparent; height:5%;width:10%;margin-top:1%;" />
+                    </form>
+
+                    <form action="/AdminPanel/Logout">
+
+                        <input type="submit" class="btn btn-danger pull-right" value="Log Out" style="background-color:transparent;height:5%;width:10%;" />
+                    </form>
+              
+
+            </div>
+
+        </div>
+    </nav>
+
+
+
+    <div class="container boxed">
+        @RenderBody();
+    </div>
+
+    
+    
+
+    <!-- make a new article-->
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/bootstrap.js")
+    @Scripts.Render("~/Scripts/validateForm.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

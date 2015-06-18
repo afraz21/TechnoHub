@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+@using boot_2_new.Models
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap-theme.css")
+    @Styles.Render("~/Content/bootstrap-theme.min.css")
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/styles.css")
+
+    <link href="~/engine1/style.css" rel="stylesheet" />
+    
+    <script type="text/javascript" src="~/engine1/jquery.js"></script>
+    
+  
+   
+    <script>
+        $().ready(function () {
+
+
+            if ($('#showpop').val() == "1") {
+                $('#footer-').removeClass("hidden");;
+
+                $('#myModal').modal('show');
+
+
+            } else if ($('#showpop').val() == "2")
+            {
+                $('#invalid').removeClass("hidden");;
+
+                $('#myModal').modal('show');
+            }
+
+            $('#btn2').click(function () {
+                $('#footer-').addClass("hidden");  
+                $('#invalid').addClass("hidden");
+            });
+
+        });
+    </script>
+
+</head>
+
+<body style="background-color:#E0DFD4">
+
+
+    <input type="hidden" value="@ViewBag.validate" id="showpop" />
+    <input type="text" value="@ViewBag.Title" id="title" class="hidden" />
+
+    <div style="background-color:black">
+        <div class="row" style="background-color:gray">
+
+            <div class="col-md-2 ">
+                <img class="img-circle img-responsive" src="~/Content/Images/images.jpg" />
+            </div>
+            <div class="col-md-6 col-lg-push-1  ">
+
+                <h1> <label class="header">Welcome To Hub Of Technology</label></h1>
+              
+
+            </div>
+            <div class="col-md-4  ">
+              
+            </div>
+        </div>
+        <nav class="navbar navbar-inverse navbar-static-top ">
+            <div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarcollapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+
+                </div>
+
+                <div class="collapse navbar-collapse " id="navbarcollapse">
+
+
+                    
+
+                    <ul class="nav navbar-nav pull-left" id="nav1">
+
+                        <li id="home1"><a href="/Home"><span class="glyphicon glyphicon-home"> HOME</span></a></li>
+                        <li id="mobile"><a href="/Mobile" class="alert-link"><span class="glyphicon glyphicon-phone"> MOBILE</span></a></li>
+                        <li id="software"><a href="/Software" class="alert-link"><span class="glyphicon glyphicon-cloud"> SOFTWARE</span></a></li>
+                        <li id="trending"><a href="/Trending" class="alert-link"><span class="glyphicon glyphicon-flag"> TRENDING</span></a></li>
+                        <li id="feedback"><a href="/FeedBack" class="alert-link"><span class="glyphicon glyphicon-leaf"> FEEDBACK</span></a></li>
+                    </ul>
+                    <div >
+                        <input type="search"  style="min-width:30%;margin-top:1%;min-height:30%" placeholder="Seacrch Site" id="search" />
+                        <input type="submit" id="search-website" class="form-inline btn btn-danger" />
+
+                        <button type="button" id="btn2" style="background-color:transparent;color:gray" class="btn btn-default btn-lg  pull-right" data-toggle="modal" data-target="#myModal">
+                            Admin Login
+                        </button>
+                    </div>
+                  
+
+                </div>
+
+
+            </div>
+        </nav>
+
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade  pull-right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Login Here</h4>
+                </div>
+                <form method="post" class="form-group" action="/AdminPanel/getLogin">
+                    <div class="modal-body ">
+
+
+
+                        <label>User Name</label>
+                        <input type="text" class="form-control" name="username" />
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" />
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-danger" value="Login">
+
+                    </div>
+
+                    <div style="font-weight:bold;color:red;font-size:15px">
+                        <p id="invalid" class="hidden bg-danger">Please Login First To Continue</p>
+                        <p id="footer-" class="hidden bg-warning">Invalid Username Or Password</p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    @if (ViewBag.Title != "Blog" && ViewBag.Title != "FeedBack")
+    {
+
+        if (ViewBag.slider != null)
+        {
+
+            <div class="container " >
+                
+                    <div class=" pull-left" style="min-width:100%; display:block;border:outset;background-color:black;color:black;font-size:50px">
+
+
+                        <!-- Start WOWSlider.com BODY section -->
+                        <div id="wowslider-container1">
+                            <div class="ws_images">
+                                <ul>
+                                    @foreach (Slider s in ViewBag.slider)
+                                    {
+                                        <li><img style="font-size:xx-large;color:black;" src="~/Content/SliderImage/@s.file" alt="back" title="" id="wows1_0" /><p style="font-size:20px;color:black;background-color:white">@s.title</p></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="ws_bullets">
+                                <div>
+                                    @foreach (Slider s in ViewBag.slider)
+                                    {
+                                        <a href="#" title="back"><span><img src="~/Content/SliderImage/@s.file" alt="back" />1</span></a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+            </div>
+        }
+    }
+
+
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <div class="footer panel-footer">
+        <footer class="footer bottom " style="font-size:medium;font-family:'Bell MT'; opacity:0.8;text-shadow:10px 10px 10px 10px">
+            <p style="margin-top: 13px;text-align:left">&copy; TechnoHub All rights reserved by <a href="https://www.facebook.com/afraz.ahmad.021"> Afraz Ahmad </a></p>
+
+        </footer>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/bootstrap.js")
+    @Scripts.Render("~/engine1/wowslider.js")
+    @Scripts.Render("~/engine1/script.js")
+    @Scripts.Render("~/Scripts/validateForm.js")
+
+
+
+
+
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

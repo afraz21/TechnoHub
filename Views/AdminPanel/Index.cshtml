@@ -1,0 +1,280 @@
+﻿@model boot_2_new.Models.News
+@using System.ComponentModel.DataAnnotations
+@using boot_2_new.Models;
+
+
+@{
+    ViewBag.Title = "Dash Bord";
+    Layout = "~/Views/Shared/AdminPanel.cshtml";
+}
+
+@{
+    var attrs = new Dictionary<string, object>();
+    attrs.Add("placeholder", "Login");
+    attrs.Add("data-icon", "user");
+}
+
+
+
+<section id="main" class="column">
+
+    @* here is Modal to edit *@
+
+    <input type="hidden" id="isedit" value=@ViewBag.iseddit />
+
+    @if (ViewBag.iseddit == "1")
+    {
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="myLargeModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="post" action="/AdminPanel/saveEditedNews" enctype="multipart/form-data">
+                        <article class="post width_full" style="height:60%">
+                            <header><h3><b>Edit Article</b></h3></header>
+                            <div class="module_content">
+                                <fieldset>
+                                    <label>Post Title</label>
+                                    <input type="hidden" value="@ViewBag.Thisnews.Id" name="Id" />
+
+                                    <input type="text" value="@ViewBag.Thisnews.title" name="title" />
+                                </fieldset>
+                                <fieldset>
+                                    <label>Content</label>
+                                    <textarea rows="9" name="news1">@ViewBag.Thisnews.news1</textarea>
+
+                                </fieldset>
+                                <fieldset style="width:48%; float:left; margin-right: 3%;">
+
+                                    <label>Category</label>
+
+                                    @Html.DropDownListFor(x => x.catagory, new List<SelectListItem>() { new SelectListItem { Value = "mobile", Text = "Mobile" }, new SelectListItem { Value = "breaking", Text = "Breaking News" }, new SelectListItem { Value = "software", Text = "Softwares" } }, new { @Styles = "width:92%" })
+
+                                </fieldset>
+                                <fieldset style="width:48%; float:left;">
+
+                                    Catagory :<label style="width:92%;">@ViewBag.Thisnews.catagory</label>
+                                </fieldset><div class="clear"></div>
+
+
+                                <footer style="margin-bottom:20%;margin-top:2%">
+
+                                    <div>
+                                        <input type="file" class="pull-left btn btn-danger" name="image" />
+                                        <input type="submit" class="btn btn-danger pull-right" style="height:10%" value="Submit Article" />
+                                    </div>
+                                </footer>
+                            </div>
+                            <div class="clear"></div>
+
+                        </article>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+    @* Modal ends here*@
+
+    <h4 class="alert_info">Welcome to Admin Panel.Manage Your contents Easily</h4>
+
+
+    <article class="module width_full">
+        <header>
+            <h3 class="tabs_involved">
+                Content Manager
+                <input type="search" placeholder="enter news title only" id="search4" />
+                <input type="submit" id="submit4" />
+                <input type="submit" id="reset4" value="Reset All" />
+            </h3>
+
+        </header>
+        <div class="tab_container">
+            <div id="tab1" class="tab_content">
+                <table class="tablesorter table table-responsive table-hover highlight-blue" cellspacing="2">
+                    <thead>
+                        <tr>
+
+                            <th>Title </th>
+                            <th>Category</th>
+                            <th>Created On</th>
+                            <th>Created By</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="news2">
+                        @foreach (News n in ViewBag.NewsAll)
+                        {
+
+                            <tr>
+
+                                <td>@n.title</td>
+                                <td>@n.catagory</td>
+                                <td>@n.date</td>
+                                <td>@n.Admin.name</td>
+
+
+                                <td>
+                                    @using (Html.BeginForm("EditNews", "AdminPanel", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("index", @n.Id);
+                                        <input type="image" src="~/Content/images-admin/icn_edit.png" id="edit1" value="~/Content/images-admin/icn_edit.png" title="Edit" data-toggle="modal" data-target=".bs-example-modal-lg">
+
+                                                                    Html.EndForm();
+                                    }
+                                </td>
+                                <td class="pull-left">
+                                    @using (Html.BeginForm("deleteNews", "AdminPanel", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("index", @n.Id);
+
+                                        <input type="image" src="~/Content/images-admin/icn_trash.png" value="~/Content/images-admin/icn_trash.png" id="delete2" title="Trash">
+                                                                    Html.EndForm();
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div><!-- end of #tab1 -->
+        </div>
+
+    </article>
+    <article class="module width_full">
+        <header>
+            <h3 class="tabs_involved">
+                Comments Manager
+
+                <input type="search" placeholder="enter user name only" id="search1" />
+                <input type="submit" id="submit3" />
+                <input type="submit" id="reset1" value="Reset All" />
+            </h3>
+
+
+        </header>
+        <div class="tab_container">
+            <div id="tab1" class="tab_content">
+                <table class="tablesorter table table-responsive table-hover highlight-blue" cellspacing="2">
+                    <thead>
+                        <tr>
+
+                            <th>Comment </th>
+                            <th></th>
+                            <th>News Title</th>
+                            <th>Username</th>
+                            <th>Date</th>
+
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comments">
+                        @foreach (Comment n in ViewBag.comments)
+                        {
+
+                            <tr>
+
+                                <td>@n.comment1</td>
+
+                                <td>
+                                    @if(n.catagory=="video")
+                                    {
+                                      if(n.Video.title!=null)
+                                      {
+                                          @n.Video.title;
+                                      }
+                                    }
+                                    else if (n.News.title != null)
+                                    {
+                                        @n.News.title
+
+                                    }
+                                </td>
+                                <td>
+                                    @n.username
+                                </td>
+
+                                <td>@n.date_</td>
+
+
+                                <td class="pull-left">
+                                    @using (Html.BeginForm("deleteComment", "AdminPanel", FormMethod.Post))
+                                    {
+
+                                        @Html.Hidden("index", @n.Id, new { @id = "index" })
+
+                                        <input type="image" id="delete" src="~/Content/images-admin/icn_trash.png" value="~/Content/images-admin/icn_trash.png" title="Trash">
+
+
+
+                                        Html.EndForm();
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div><!-- end of #tab1 -->
+        </div>
+
+
+    </article>
+
+
+
+    <div class="clear"></div>
+
+    @using (Html.BeginForm("getNews", "AdminPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <article class="post width_full" style="height:60%">
+                <header><h3><b>Post New Article</b></h3></header>
+                <div class="module_content">
+                    <fieldset>
+                        @Html.LabelFor(x => x.title)
+
+                        @Html.EditorFor(x => x.title, new { @class = "Boxed" })
+                        @Html.ValidationMessageFor(x => x.title)
+                    </fieldset>
+                    <fieldset>
+                        @Html.LabelFor(x => x.news1)
+                        @Html.TextAreaFor(x => x.news1, new { rows = "11", @class = ".has-feedback" })
+                        @Html.ValidationMessageFor(x => x.news1)
+
+                    </fieldset>
+                    <fieldset style="width:48%; float:left; margin-right: 3%;">
+
+                        @Html.LabelFor(x => x.catagory)
+
+                        @Html.DropDownListFor(x => x.catagory, new List<SelectListItem>() { new SelectListItem { Value = "mobile", Text = "Mobile" }, new SelectListItem { Value = "breaking", Text = "Breaking News" }, new SelectListItem { Value = "software", Text = "Softwares" } }, new { @Styles = "width:92%" })
+
+                    </fieldset>
+                    <fieldset style="width:48%; float:left;">
+
+                        @Html.LabelFor(x => x.tags)
+
+                        <input type="text" name="tags" style="width:92%;">
+                    </fieldset><div class="clear"></div>
+
+
+                    <footer style="margin-bottom:20%;margin-top:2%">
+
+
+                        Title Image:<input type="file" value="Upload title Image" name="title" />
+                        <input style="margin-left:30%" type="file" name="image" accept="multiple" multiple="multiple" />
+                        <input type="submit" class="btn btn-danger pull-right" style="height:10%" value="Submit Article" />
+
+                    </footer>
+                </div>
+                <div class="clear"></div>
+
+            </article>
+
+         
+        </fieldset>
+
+    }
+
+
+
+</section>

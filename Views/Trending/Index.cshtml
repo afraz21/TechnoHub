@@ -1,0 +1,171 @@
+﻿@using boot_2_new.Models
+
+@{
+    ViewBag.Title = "Trending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    int count = 1;
+}
+
+
+<div class="container" style="display:block;">
+    <label style="font-size:xx-large;background:none;" class="label-danger">Trending Videos</label><br />
+
+    <div>
+
+        <div class="row">
+            <div class="col-md-2">
+
+
+            </div>
+
+            <div class=" col-md-8 ">
+
+                <!--first-->
+                @foreach (Video n in Model)
+                {
+
+
+                    <ul class="header" id="first">
+
+                        <!-- single news block-->
+                        <li>
+                            <div class="news" style="height:420px;max-height:650px;border:none;background-color:transparent">
+
+                                <div class="news_heading center-block ">
+                                    <label id="lable" class="label-danger"> @n.title</label>
+                                </div>
+
+
+                                <div style="background:none;border:none">
+
+                                    <video height="300" title="@n.title" width="750">
+                                        <source src="~/Content/Videos/@n.file" type="video/@n.file.Split('.')[1]">
+                                        <source src="~/Content/Videos/@(n.file.Split('.')[0]).ogg" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                    </video>
+
+                                </div>
+
+
+
+
+
+                                <div class="news-footer pull-left " style="margin-left:20%" id="footer">
+
+
+
+
+
+
+                                    <button type="submit" class="btn btn-danger">     @Html.ActionLink("Watch ", "WtachMore", new { id = n.Id })</button>
+
+
+                                </div>
+
+                            </div>
+
+                        </li>
+
+
+                    </ul>
+
+                }
+
+            </div>
+
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-6  ">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-2">
+    <div class="row">
+        <div class="col-md-6">
+            <p class="label  label-danger">Web Search</p>
+        </div>
+        <div class="col-md-6  ">
+
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+<div id="home2" class="hidden container">
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <ul class="header" id="wow"></ul>
+
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+
+</div>
+<div id="template" class="hidden">
+
+
+    <div class="news">
+        <div class="news_image">
+            <p>
+                <img id="img" style="width:30%;height:auto;min-height:270px;float:left" class="img-rounded news_image" />
+            </p>
+        </div>
+
+        <div class="news_heading center-block ">
+            <label id="title-news-" style="font-size:small"></label>
+        </div>
+        <div class="news_content">
+            <p id="news-content-" style="margin-left:10%;"></p>
+
+        </div>
+        <div class="news-footer" id="footer">
+            <form method="post" action="/Seemore/Blog">
+
+                <span style="font-size:large; margin-right:10px" data-toggle="tooltip" data-placement="left" title="Date And Time Of Post" id="icons" class=" glyphicon  glyphicon-pencil ">
+                    <label style="font-size:x-small" id="date1">
+
+                    </label>
+                </span>
+
+                <span style="font-size:large; margin-right:10px" data-toggle="tooltip" data-placement="left" title="Likes" class="  glyphicon  glyphicon-thumbs-up "><label style="font-size:x-small" id="likes"></label></span>
+                <span style="font-size:large;margin-right:10px " data-toggle="tooltip" data-placement="left" title="Comments" class=" glyphicon  glyphicon-comment "><label style="font-size:x-small" id="comments"></label></span>
+
+
+                <input type="hidden" id="nid" name="nid" />
+                @* <button class="btn btn-info pull-right" id="readmore" data-toggle="tooltip" data-placement="left" title="Read More" style="margin-right:10px;font-size:small">Read More</button>*@
+
+
+
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+<div id="template2" class="hidden">
+    <form method="post" action="/Seemore/Blog">
+        <div id="post-sub">
+
+        </div>
+    </form>
+</div>
+
+

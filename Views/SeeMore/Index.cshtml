@@ -1,0 +1,213 @@
+﻿@model boot_2_new.Models.Comment
+@using boot_2_new.Models;
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/styles.css")
+
+@{
+    var cnt = 0;
+}
+<div class="container">
+
+
+    <div class="col-md-4 seemoreimg">
+
+    </div>
+    <div class="col-md-6 ">
+        <h1>@ViewBag.news.title</h1>
+
+                @if (@ViewBag.news.fcount > 0)
+                {
+
+                    <img class="img img-thumbnail seemoreimg" style="border:solid; height:200%;width:100%" src="~/Content/imgaes-news/@(ViewBag.news.Id)-@(cnt).jpg" onerror="this.src = '~/Content/imgaes-news/@(ViewBag.news.Id)-@(cnt).png'" />
+            @(cnt++);
+        }
+        
+        @{
+            FileStream f = new FileStream(Server.MapPath(@"~\Content\NewsFiles\" + ViewBag.news.Id + ".txt"), FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            StreamReader rd = new StreamReader(f);
+            ViewBag.news.news1 = rd.ReadToEnd();
+            rd.Close();
+            f.Close();
+            
+            for(int i=0;i<ViewBag.news.fcount;i++)
+            {
+                
+            }
+          
+            int length = ViewBag.news.news1.Length / ViewBag.news.fcount;
+            int temp = 0;
+           
+        }
+
+        @for (int i = 0; i < ViewBag.news.fcount-1; i++)
+        {
+            string news = ViewBag.news.news1.Substring(temp,length);
+            temp = length;
+            <p class="text-justify" style="margin-left:3%;word-spacing:20%"> @news</p>
+             <img class="img img-thumbnail seemoreimg" style="border:solid; height:100%;width:50%" src="~/Content/imgaes-news/@(ViewBag.news.Id)-@(cnt++).jpg" />
+        }
+       @*<p class="text-justify" style="margin-left:3%;word-spacing:20%"> @news1</p>
+    @if (cnt < @ViewBag.news.fcount)
+    {
+    <img class="img img-thumbnail seemoreimg" style="border:solid; height:100%;width:50%" src="~/Content/imgaes-news/@(ViewBag.news.Id)-@(cnt++).jpg" />
+    }
+    <p class="text-justify" style="margin-left:3%;word-spacing:20%"> @news2</p>
+    @if (cnt < @ViewBag.news.fcount)
+    {
+        <img class="img img-thumbnail seemoreimg" style="border:solid; height:100%;width:50%" src="~/Content/imgaes-news/@(ViewBag.news.Id)-@(cnt++).jpg" />
+    }*@ 
+        <div class="boxed bg-info" style="background-color:white;backface-visibility:hidden;border:outset;margin-left:2%">
+            <div class="row box-info">
+                <div class="col-md-6">
+                    <label>Posted On</label><br />
+                    <label>Posted in</label><br />
+                    <label>Posted by</label><br />
+                    <label>Tags</label>
+                </div>
+                <div class="col-md-6">
+                    <p>@ViewBag.news.date</p>
+                    <p>@ViewBag.news.catagory</p>
+                    <p>@ViewBag.news.Admin.name</p>
+                    <p>
+                        @if (ViewBag.news.tags != null)
+                        {
+                            foreach (string s in ViewBag.news.tags.Split(' '))
+                            {<span style="margin-right:2%">@s </span>   }
+                        }
+                    </p>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-2">
+
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+
+
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-6 ">
+
+            <span class="glyphicon glyphicon-thumbs-up" style="font-size:xx-large"></span><label style="font-size:small">@ViewBag.news.Likes</label>
+            <form method="post" action="/Seemore/getLikes">
+                <input type="hidden" value="@ViewBag.news.Id" name="newsId" />
+                <button class="btn btn-danger">Click To Likes Story</button>
+            </form>
+
+            <h1><span class="glyphicon glyphicon-comment" style="font-size:xx-large">  Comments</span> </h1>
+
+
+            @{
+                var count = 1;
+                foreach (Comment c in ViewBag.Comment)
+                {
+
+                    <label>Comment No: @(count++)</label>
+                    <div class="comments">
+
+                        <p><label>Name:</label><span style="margin-left:5%">@c.username</span></p>
+                        <p>  <label>Email:</label><a href="#"><span style="margin-left:5%">@c.email</span></a></p>
+                        <p><label>Gender:</label><span style="margin-left:5%">@c.gender</span></p>
+                        <p><label>Comment:</label> <span style="margin-left:5%">@c.comment1 </span></p>
+                    </div>
+
+                }
+            }
+
+
+
+            <div class="text-info" style="color:black;font-weight:bold"><h2>Leave a Reply</h2></div>
+            <div class="container row ">
+                <div class="col-md-7">
+                    @using (Html.BeginForm("getComment", "SeeMore"))
+                    {
+                        @Html.ValidationSummary(true)
+                        <fieldset>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+
+                                    <input type="hidden" name="nid" value="@ViewBag.news.Id" />
+
+                                    @Html.LabelFor(x => x.username, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-10 controls-row">
+                                        @Html.EditorFor(x => x.username, new { @class = "form-control", placeholder = "Name..." })
+                                        @Html.ValidationMessageFor(x=>x.username)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => x.email, new { @class = "col-sm-2 control-label" })
+                                  
+                                    <div class="col-sm-10 controls-row">
+                                        @Html.EditorFor(x => x.email, new { @class = "form-control", placeholder = "Email.." })
+                                        @Html.ValidationMessageFor(x => x.email)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => x.comment1, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-7 controls-row">
+                                        @Html.TextAreaFor(x => x.comment1, new { rows = "8", @class = "form-control", placeholder = "Comment here.." })
+                                        @Html.ValidationMessageFor(x=>x.comment1)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2 control-label dl-horizontal">
+                                        <label for=" inputemail">
+                                            Sex
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-1 ">
+                                        <div class="radio dl-horizontal">
+                                            <label>
+                                                @Html.RadioButtonFor(x => x.gender, "Male") Male
+                                            </label>
+                                        </div>
+                                        <div class="radio dl-horizontal">
+                                            <label>
+                                                @Html.RadioButtonFor(x => x.gender, "Female") FeMale
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group bottom ">
+                                    <div class="col-sm-offset-3  col-sm-pull-2">
+
+                                    </div>
+                                </div>
+                                <div class="form-group bottom">
+                                    <div class="col-sm-offset-3 col-sm-pull-2">
+                                        <button type="submit" class="btn btn-info boxed">Submit</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </fieldset>
+                       Html.EndForm();
+                    }
+                </div>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
